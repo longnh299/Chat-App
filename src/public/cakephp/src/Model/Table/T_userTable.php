@@ -1,5 +1,5 @@
 <?php
-// in src/Model/Table/ArticlesTable.php
+// in src/Model/Table/T_userTable.php
 namespace App\Model\Table;
 
 use Cake\ORM\Table;

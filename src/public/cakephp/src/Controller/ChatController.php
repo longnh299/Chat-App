@@ -1,5 +1,5 @@
 <?php
-// src/Controller/ArticlesController.php
+// src/Controller/ChatController.php
 
 namespace App\Controller;
 use App\Controller\AppController;
@@ -35,33 +35,40 @@ class ChatController extends AppController
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             date_default_timezone_get();
             $time = FrozenTime::now();
-            //$now = FrozenTime::parse('now');
             $_now = $time->i18nFormat('yyyy-MM-dd HH:mm:ss');
             $t_feed->create_at=$_now;
-            // Hardcoding the user_id is temporary, and will be removed later
-            // when we build authentication out.
-            //$t_feed->id = 1;
+            $session = $this->getRequest()->getSession();
+            $t_feed->user_id = $session->read('user_id');
+            $t_feed->name = $session->read('name');
+            if(!$t_feed->getErrors){
+                $attachment = $this->request->getData('Media');
+                //if(!$attachment->getErrors()){
+                $name = $attachment->getClientFilename();
+                $type = $attachment->getClientMediaType();
+                $size = $attachment->getSize();
+                $tmpName = $attachment->getStream()->getMetadata('uri');
+                $error = $attachment->getError();
+                if (strpos($name,'.mp4') !== false or strpos($name,'.webm') !== false or strpos($name,'.ogg') !== false) {
+                    $targetPath= WWW_ROOT.'video'.DS.$name;
+                } 
+                elseif (strpos($name,'.mp3') !== false or strpos($name,'.wav') !== false){
+                    $targetPath= WWW_ROOT.'audio'.DS.$name;
+                }
+                else $targetPath= WWW_ROOT.'img'.DS.$name;
+                if($name){
+                    $attachment->moveTo($targetPath);
+                    $t_feed->imagefilename=$name;
+                }
+              //}
+            }
 
             if ($this->T_feed->save($t_feed)) {
                 $this->Flash->success(__('Your chat is sended.'));
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('Unable to add your article.'));
+            $this->Flash->error(__('Unable to add your chat.'));
         }
         $this->set('t_feed', $t_feed);
-        // if($this->request->is('post')){
-        //     $name=$this->request->getData('name');
-        //     $message=$this->request->getData('message');
-        //     $t_feed_table = TableRegistry::get('t_feed');
-        //     $t_feed=$t_feed_table->newEntity($this->request->getData());
-        //     $t_feed->name=$name;
-        //     $t_feed->message=$message;
-        //     $this->set('t_feed', $t_feed);
-        //     if($t_feed_table->save($t_feed)){
-        //         echo "message is sended";
-        //         //$this->redirect(['action' => 'index']);
-        //     }
-        // }
     }
     public function edit($id)
     {
@@ -77,6 +84,27 @@ class ChatController extends AppController
             //$now = FrozenTime::parse('now');
             $_now = $time->i18nFormat('yyyy-MM-dd HH:mm:ss');
             $t_feed->update_at=$_now;
+            if(!$t_feed->getErrors){
+                $attachment = $this->request->getData('Media');
+                //if(!$attachment->getErrors()){
+                $name = $attachment->getClientFilename();
+                $type = $attachment->getClientMediaType();
+                $size = $attachment->getSize();
+                $tmpName = $attachment->getStream()->getMetadata('uri');
+                $error = $attachment->getError();
+                if (strpos($name,'.mp4') !== false or strpos($name,'.webm') !== false or strpos($name,'.ogg') !== false) {
+                    $targetPath= WWW_ROOT.'video'.DS.$name;
+                } 
+                elseif (strpos($name,'.mp3') !== false or strpos($name,'.wav') !== false){
+                    $targetPath= WWW_ROOT.'audio'.DS.$name;
+                }
+                else $targetPath= WWW_ROOT.'img'.DS.$name;
+                if($name){
+                    $attachment->moveTo($targetPath);
+                    $t_feed->imagefilename=$name;
+                }
+             // }
+            }   
             if ($this->T_feed->save($t_feed)) {
                 $this->Flash->success(__('This Message has been updated.'));
                 return $this->redirect(['action' => 'index']);
@@ -87,12 +115,12 @@ class ChatController extends AppController
         $this->set('t_feed', $t_feed);
     }
     public function delete($id)
-{
+    {
     $this->request->allowMethod(['post', 'delete']);
 
     $t_feed = $this->T_feed->findById($id)->firstOrFail();
     if ($this->T_feed->delete($t_feed)) {
-        $this->Flash->success(__('The {0} message has been deleted.', $t_feed->name));
+        $this->Flash->success(__('The message of {0} has been deleted.', $t_feed->name));
         return $this->redirect(['action' => 'index']);
     }
 }

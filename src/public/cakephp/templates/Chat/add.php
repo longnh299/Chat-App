@@ -1,4 +1,4 @@
-<!-- File: templates/Articles/add.php -->
+<!-- File: templates/Chat/add.php -->
 
 <h1>Add Chat</h1>
 <?php

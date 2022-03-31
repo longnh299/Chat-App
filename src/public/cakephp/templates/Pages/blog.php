@@ -11,21 +11,24 @@
             width: 50%;
         }
         .d1 {
+            width: 30%;
             border: solid 2px red;
             padding: 100px;
             border-radius: 25px;
+            background-color: white;
+            margin: auto;
         }
         .intro {
             text-align: center;
-        }
-        .d2 {
-            padding-left: 400px;
+            color:#606c76;
+            font-size: 2.0rem;
+            font-weight: 700;
         }
     </style>
 </head>
 <body>
+    <p class='intro'>Welcome to WhatsApp red</p>
     <div class='d1'>
-        <p class='intro'>Welcome to WhatsApp red</p>
         <!-- <a href="<?= $this->Url->build('/user/login') ?>">Login</a> <br>
         <a href="<?= $this->Url->build('/user/regist') ?>">Register</a> -->
         <div class="d2">
@@ -33,6 +36,5 @@
             <button type="button" class="btn btn-outline-danger"><a href="<?= $this->Url->build('/user/regist') ?>">Register</a></button>
         </div>
     </div>
-   
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-// in src/Model/Table/ArticlesTable.php
+// in src/Model/Table/T_feedTable.php
 namespace App\Model\Table;
 
 use Cake\ORM\Table;
@@ -29,11 +29,9 @@ class T_feedTable extends Table
         $validator
             ->notEmptyString('name')
             ->minLength('name', 1)
-            ->maxLength('name', 255)
-
-            ->notEmptyString('message')
-            ->minLength('message', 1);
-
+            ->maxLength('name', 255);
+        $validator
+            ->allowEmptyFile('imagefilename');
         return $validator;
     }
 }
