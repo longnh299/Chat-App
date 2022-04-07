@@ -1,77 +1,140 @@
 <!-- File: templates/Chat/index.php  (delete links added) -->
-<style>
-div.ex1 {
-  background-color: white;
-  width: 100%;
-  height: 500px; 
-  overflow-y: scroll;
-  /* border: 2px solid red; */
-  border-radius: 12px;
-  padding: 20px;
-}
-div.ex2 {
-  /* border: 2px solid red; */
-  /* width: 50%; */
-  background-color: white;
-  height: 50%;
-  border-radius: 12px;
-  padding: 2px;
-  margin-top: 10px;
-  padding: 20px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-h1 {
-    /* padding-left: 450px; */
-    color:#606c76;
-    font-size: 2.0rem;
+<head>
+    <style>
+    div.ex1 {
+    background-color: white;
+    width: 100%;
+    height: 500px; 
+    overflow-y: scroll;
+    /* border: 2px solid red; */
+    border-radius: 12px;
+    padding: 20px;
+    }
+    div.ex2 {
+    /* border: 2px solid red; */
+    /* width: 50%; */
+    background-color: white;
+    height: 50%;
+    border-radius: 12px;
+    padding: 2px;
+    margin-top: 10px;
+    padding: 20px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    h1 {
+        /* padding-left: 450px; */
+        color:#606c76;
+        font-size: 2.0rem;
+        font-weight: 700;
+    }
+    .logout {
+        padding-left: 1000px;
+        margin: 20px;
+    }
+    .btn-edit-name {
+        padding-left: 930px;
+        /* margin: 20px; */
+    }
+    .emojidiv {
+        display: flex; 
+        overflow-x: scroll;
+    }
+    /* .emojidiv {
+        min-width: 16.6%;
+        min-height: 90px;
+        background-color: #f5f7fa;
+        border: none; 
+    } */
+    .emoji_btn{
+        min-width: 16.6%;
+        min-height: 90px;
+        background-color: #f5f7fa;
+        border: none; 
+    }
+    .custom-file-input::-webkit-file-upload-button {
+    visibility: hidden;
+    }
+    .custom-file-input::before {
+    content: 'Select files';
+    color: white;
+    display: inline-block;
+    background: #d33c43;
+    border: 1px solid #999;
+    border-radius: 3px;
+    padding: 5px 8px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
     font-weight: 700;
-}
-.logout {
-    padding-left: 1000px;
-    margin: 20px;
-}
-.emojidiv {
-     display: flex; 
-    overflow-x: scroll;
-}
-/* .emojidiv {
-    min-width: 16.6%;
-    min-height: 90px;
+    font-size: 10pt;
+    }
+    .custom-file-input:hover::before {
+    border-color: black;
+    }
+    .custom-file-input:active::before {
+    background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+    }
+    .btn-send {
+        margin-left: 950px;
+    }
+
+    .dropbtn {
     background-color: #f5f7fa;
-    border: none; 
-} */
-.emoji_btn{
-    min-width: 16.6%;
-    min-height: 90px;
-    background-color: #f5f7fa;
-    border: none; 
-}
-.custom-file-input::-webkit-file-upload-button {
-  visibility: hidden;
-}
-.custom-file-input::before {
-  content: 'Select files';
-  color: white;
-  display: inline-block;
-  background: #d33c43;
-  border: 1px solid #999;
-  border-radius: 3px;
-  padding: 5px 8px;
-  outline: none;
-  white-space: nowrap;
-  -webkit-user-select: none;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 10pt;
-}
-.custom-file-input:hover::before {
-  border-color: black;
-}
-.custom-file-input:active::before {
-  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
-}
-</style>
-<a class='logout' href="<?= $this->Url->build('/user/login') ?>">Logout</a> 
+    color: white;
+    /* padding: 16px; */
+    font-size: 16px;
+    border: none;
+    
+    }
+
+    .dropdown {
+    position: relative;
+    display: inline-block;
+    /* margin-bottom: 200px; */
+    margin-left: 1000px;
+    }
+
+    .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    }
+
+    .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    }
+
+    .dropdown-content a:hover {background-color: #ddd;}
+
+    .dropdown:hover .dropdown-content {display: block;}
+
+    .dropdown:hover .dropbtn {background-color:#f5f7fa;}
+    .dropdown-icon {
+        width: 20px;
+        height: 20px;
+    }
+    </style>
+</head>
+<?php 
+   $session = $this->getRequest()->getSession();
+   $t_feed->user_id = $session->read('user_id');
+   $user_id=$session->read('user_id');
+   $t_feed->name = $session->read('name');
+?>
+<div class="dropdown">
+  <button class="dropbtn"><img class="dropdown-icon" src="https://www.pngkey.com/png/detail/207-2079719_rounded-triangle-png-dropdown-arrow-icon-png.png" alt=""></button>
+    <div class="dropdown-content">
+         <a class='btn-edit-name' href="<?= $this->Url->build('/user/editname') ?>">Edit Account Name</a>  
+        <a class='logout' href="<?= $this->Url->build('/user/login') ?>">Logout</a> 
+    </div>
+</div>
 <div class="ex1">
 <table>
     <tr>
@@ -86,9 +149,9 @@ h1 {
 <?php foreach ($t_feed as $t_feed): ?>
     <tr>
         <td id="name">
-            <?= $this->Html->link($t_feed->name, ['action' => 'view', $t_feed->id]) ?>
+            <?=$t_feed->name?>
         </td>
-        <td id="message">
+        <td>
             <?= $this->Html->link($t_feed->message, ['action' => 'view', $t_feed->id]) ?>
         </td>
         <td>
@@ -138,11 +201,13 @@ h1 {
             <?= $t_feed->update_at?> 
         </td> 
         <td>
-            <?= $this->Html->link('Edit', ['action' => 'edit', $t_feed->id]) ?>
-            <?= $this->Form->postLink(
+            <?php if($session->read('user_id') == $t_feed->user_id){
+            echo $this->Html->link('Edit', ['action' => 'edit', $t_feed->id]) ;
+            echo "<br>";
+            echo $this->Form->postLink(
                 'Delete',
                 ['action' => 'delete', $t_feed->id],
-                ['confirm' => 'Are you sure?'])
+                ['confirm' => 'Are you sure?']);}
             ?>
         </td>
     </tr>
@@ -152,12 +217,12 @@ h1 {
 <div class="ex2">
     <!-- <h1>Chat Box</h1> -->
     <?php
+        echo $this->Form->create(NULL,array('url'=>'chat/add','type'=>'file'));
         $session = $this->getRequest()->getSession();
         $t_feed->user_id = $session->read('user_id');
         $t_feed->name = $session->read('name');
-        echo $this->Form->create(NULL,array('url'=>'chat/add','type'=>'file'));
         echo $this->Form->control('id', ['type' => 'hidden']);
-        //echo $this->Form->control('user_id',['value'=>$user_id,'type'=>'hidden']);
+        echo $this->Form->control('user_id',['value'=>$user_id,'type'=>'hidden']);
         // echo $this->Form->control('name',['value'=>$session->read('name'),'disabled'=>'disabled']);
         echo $this->Form->control('message', ['rows' => '5','placeholder' => 'Enter your message here']);
         //echo $this->Form->control('create_at',['value'=>getdate()]);
@@ -185,9 +250,9 @@ h1 {
             //echo $id_stamp;
             echo '<button class="emoji_btn" name="stamp_id" value='.$id_stamp.'><img src="'.$emoji.'" /></button>';
          }
-         echo "</div";
+         echo "</div>";
          echo "<br>";
-        echo $this->Form->button(__('Send'));
+        echo $this->Form->button(__('Send'),['class'=>'btn-send']);
         echo $this->Form->end();
 
     ?>

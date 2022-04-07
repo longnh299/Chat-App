@@ -28,6 +28,7 @@
     //echo $this->Form->create(NULL,array('url'=>'chat/add'));
     // Hard code the user for now.
     echo $this->Form->control('id', ['type' => 'hidden']);
+    echo $this->Form->control('user_id', ['type' => 'hidden']);
     echo $this->Form->control('email',['class'=>'login-input','placeholder'=>'enter your email']);
     echo $this->Form->control('password',['class'=>'pass-input','placeholder'=>'enter your password']);
     //echo $this->Form->control('Media',['type'=>'file','title'=>'Choose a image','class'=>'custom-file-input']);

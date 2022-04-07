@@ -58,6 +58,14 @@ h1 {
 .editchat-text {
     text-align: center;
 }
+.btn-send {
+    margin-left: 650px;
+}
+.btn-back {
+    border:2px solid red;
+    padding: 100px;
+    margin: 100px;
+}
 </style>
 <div class="edit-div">
 <h1 class="editchat-text">Edit Chat</h1>
@@ -130,9 +138,12 @@ h1 {
         //echo $id_stamp;
         echo '<button class="emoji_btn" name="stamp_id" value='.$id_stamp.'><img src="/'.$emoji.'" /></button>';
     }
-    echo "</div";
+    echo "</div>";
     echo "<br>";
-    echo $this->Form->button(__('Save Chat'));
+    //echo "<div class="">";
+    echo $this->Form->button(__('Save Chat'),['class'=>'btn-send']);
+    echo $this->Html->link('Back', ['class'=>'btn-back','action' => 'index']) ;
+    //echo "</div>";
     echo $this->Form->end();
 ?>
 </div>

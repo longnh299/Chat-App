@@ -36,11 +36,11 @@ class UserController extends AppController
                     if($tu->email==$t_user->email && $tu->password==$t_user->password){
                         //$this->Flash->success(_('Login successfully'));
                         $session = $this->getRequest()->getSession();
+                        $session->write('user_id',$tu->id);
                         $session->write('email', $tu->email);
                         $session->write('name', $tu->name);
                         return $this->redirect(['controller'=>'chat','action'=>'index']);
-                        $flag=1;
-                        //break;
+                        break;
                     }
                 endforeach;
                 if($flag==0){
@@ -76,4 +76,35 @@ class UserController extends AppController
     $this->Authentication->logout();
     return $this->redirect(['controller' => 'user', 'action' => 'login']);
    }
+   public function editname(){ //$id
+    // $t_user = $this->T_user
+    // ->findById($id)
+    // ->firstOrFail();
+    $t_user = $this->T_user->newEmptyEntity();
+    if ($this->request->is('post')) {
+        $t_user = $this->T_user->patchEntity($t_user, $this->request->getData());
+        if ($this->T_user->save($t_user)) {
+            $this->Flash->success(__('Your account name has been updated.'));
+            //return $this->redirect(['action' => 'index']);
+        }
+       // $this->Flash->error(__('you do not regist successfully'));
+    }
+    $this->set('t_user', $t_user);
+
+    }
+    // public function editname($id)
+    // {
+    //     $t_user = $this->T_user->findById($id)->firstOrFail();
+    //     if ($this->request->is(['post', 'put'])) {
+    //         $this->T_user->patchEntity($t_user, $this->request->getData());
+    //         if ($this->T_user->save($t_user)) {
+    //             $this->Flash->success(__('Your account name has been updated.'));
+    //             //return $this->redirect(['action' => 'index']);
+    //         }
+    //         $this->Flash->error(__('Unable to update your message.'));
+    //     }
+
+    //     $this->set('t_user', $t_user);
+    // }
+    
 }

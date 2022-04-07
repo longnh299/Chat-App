@@ -24,7 +24,7 @@ class ChatController extends AppController
     }
     public function view($id = null)
     {
-        $t_feed = $this->Chat->findBySlug($id)->firstOrFail();
+        $t_feed = $this->T_feed->findById($id)->firstOrFail();
         $this->set(compact('t_feed'));
     }
     public function add()
@@ -40,6 +40,8 @@ class ChatController extends AppController
             $session = $this->getRequest()->getSession();
             $t_feed->user_id = $session->read('user_id');
             $t_feed->name = $session->read('name');
+            // debug($t_feed);
+            // exit;
             if(!$t_feed->getErrors){
                 $attachment = $this->request->getData('Media');
                 //if(!$attachment->getErrors()){
@@ -109,19 +111,33 @@ class ChatController extends AppController
                 $this->Flash->success(__('This Message has been updated.'));
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('Unable to update your article.'));
+            $this->Flash->error(__('Unable to update your message.'));
         }
 
         $this->set('t_feed', $t_feed);
     }
-    public function delete($id)
-    {
-    $this->request->allowMethod(['post', 'delete']);
+        public function delete($id)
+        {
+        $this->request->allowMethod(['post', 'delete']);
 
-    $t_feed = $this->T_feed->findById($id)->firstOrFail();
-    if ($this->T_feed->delete($t_feed)) {
-        $this->Flash->success(__('The message of {0} has been deleted.', $t_feed->name));
-        return $this->redirect(['action' => 'index']);
+        $t_feed = $this->T_feed->findById($id)->firstOrFail();
+        if ($this->T_feed->delete($t_feed)) {
+            $this->Flash->success(__('The message of {0} has been deleted.', $t_feed->name));
+            return $this->redirect(['action' => 'index']);
+        }
     }
-}
+    // public function editname($id)
+    // {
+    //     $t_user = $this->T_user->findById($id)->firstOrFail();
+    //     if ($this->request->is(['post', 'put'])) {
+    //         $this->T_user->patchEntity($t_user, $this->request->getData());
+    //         if ($this->T_user->save($t_user)) {
+    //             $this->Flash->success(__('Your account name has been updated.'));
+    //             //return $this->redirect(['action' => 'index']);
+    //         }
+    //         $this->Flash->error(__('Unable to update your message.'));
+    //     }
+
+    //     $this->set('t_user', $t_user);
+    // }
 }
