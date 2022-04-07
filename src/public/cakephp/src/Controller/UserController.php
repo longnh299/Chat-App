@@ -19,7 +19,7 @@ class UserController extends AppController
         $session->delete('email');
         $session->delete('name');
     }
-
+    // login func
    public function login()
    {
         $t_user = $this->T_user->newEmptyEntity();
@@ -32,6 +32,7 @@ class UserController extends AppController
              else {
                 $t_user_old = $this->T_user->find();
                 $flag=0;
+                // check email and password
                 foreach ($t_user_old as $tu):
                     if($tu->email==$t_user->email && $tu->password==$t_user->password){
                         //$this->Flash->success(_('Login successfully'));
@@ -52,12 +53,14 @@ class UserController extends AppController
 
         $this->set('t_user', $t_user);
    }
+   // register func
    public function regist()
    {
     $t_user = $this->T_user->newEmptyEntity();
     if ($this->request->is('post')) {
         $t_user = $this->T_user->patchEntity($t_user, $this->request->getData());
         $t_user_old=$this->T_user->find();
+        // check email exict
         foreach ($t_user_old as $tu):
             if($tu->email==$t_user->email){
                 $this->Flash->success(__('This email is exict'));
@@ -72,10 +75,12 @@ class UserController extends AppController
     }
     $this->set('t_user', $t_user);
    }
+   // logout func
    public function logout(){
     $this->Authentication->logout();
     return $this->redirect(['controller' => 'user', 'action' => 'login']);
    }
+   // edit account name func
    public function editname(){ //$id
     // $t_user = $this->T_user
     // ->findById($id)

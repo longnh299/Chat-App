@@ -122,16 +122,20 @@
     }
     </style>
 </head>
+
 <?php 
+// session
    $session = $this->getRequest()->getSession();
    $t_feed->user_id = $session->read('user_id');
    $user_id=$session->read('user_id');
    $t_feed->name = $session->read('name');
 ?>
+<!--dropdown menu-->
 <div class="dropdown">
   <button class="dropbtn"><img class="dropdown-icon" src="https://www.pngkey.com/png/detail/207-2079719_rounded-triangle-png-dropdown-arrow-icon-png.png" alt=""></button>
     <div class="dropdown-content">
          <a class='btn-edit-name' href="<?= $this->Url->build('/user/editname') ?>">Edit Account Name</a>  
+        <a class='btn-edit-password' href="<?= $this->Url->build('/user/editpw') ?>">Change Password</a> 
         <a class='logout' href="<?= $this->Url->build('/user/login') ?>">Logout</a> 
     </div>
 </div>
@@ -155,7 +159,7 @@
             <?= $this->Html->link($t_feed->message, ['action' => 'view', $t_feed->id]) ?>
         </td>
         <td>
-            <div style="width: 100px;height: 100px;">
+            <div style="width: 100px;height: 100px;"> <!-- display emoji-->
                 <img src="<?php echo "img/stamps/".$t_feed->stamp_id.".png"; ?>" alt="">
             </div>
         </td>
@@ -215,7 +219,7 @@
 </table>
 </div>
 <div class="ex2">
-    <!-- <h1>Chat Box</h1> -->
+    <!-- Form chat box -->
     <?php
         echo $this->Form->create(NULL,array('url'=>'chat/add','type'=>'file'));
         $session = $this->getRequest()->getSession();
@@ -241,6 +245,7 @@
         echo "<div class='emojidiv'>";
         $link = "img/stamps/";
         $emoji = glob($link."*.png");
+        // get stamp id
         foreach($emoji as $emoji) {
             $subemoji = substr($emoji,11);
             $rev_str = strrev($subemoji);
@@ -259,6 +264,7 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>
 <script>
+    // preview file before upload
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();

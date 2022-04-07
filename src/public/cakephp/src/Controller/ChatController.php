@@ -22,16 +22,19 @@ class ChatController extends AppController
         $t_feed = $this->Paginator->paginate($this->T_feed->find());
         $this->set(compact('t_feed'));
     }
+    // chat detail
     public function view($id = null)
     {
         $t_feed = $this->T_feed->findById($id)->firstOrFail();
         $this->set(compact('t_feed'));
     }
+    // add chat
     public function add()
     {
         $t_feed = $this->T_feed->newEmptyEntity();
         if ($this->request->is('post')) {
             $chat = $this->T_feed->patchEntity($t_feed, $this->request->getData());
+            // format time
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             date_default_timezone_get();
             $time = FrozenTime::now();
@@ -42,6 +45,7 @@ class ChatController extends AppController
             $t_feed->name = $session->read('name');
             // debug($t_feed);
             // exit;
+            // save media file into webroot
             if(!$t_feed->getErrors){
                 $attachment = $this->request->getData('Media');
                 //if(!$attachment->getErrors()){
@@ -63,7 +67,7 @@ class ChatController extends AppController
                 }
               //}
             }
-
+            // save into database
             if ($this->T_feed->save($t_feed)) {
                 $this->Flash->success(__('Your chat is sended.'));
                 return $this->redirect(['action' => 'index']);
@@ -72,6 +76,7 @@ class ChatController extends AppController
         }
         $this->set('t_feed', $t_feed);
     }
+    // edit chat
     public function edit($id)
     {
         $t_feed = $this->T_feed
@@ -116,8 +121,8 @@ class ChatController extends AppController
 
         $this->set('t_feed', $t_feed);
     }
-        public function delete($id)
-        {
+    // delete chat
+    public function delete($id){
         $this->request->allowMethod(['post', 'delete']);
 
         $t_feed = $this->T_feed->findById($id)->firstOrFail();
