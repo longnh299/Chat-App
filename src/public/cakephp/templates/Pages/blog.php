@@ -29,8 +29,6 @@
 <body>
     <p class='intro'>Welcome to WhatsApp red</p>
     <div class='d1'>
-        <!-- <a href="<?= $this->Url->build('/user/login') ?>">Login</a> <br>
-        <a href="<?= $this->Url->build('/user/regist') ?>">Register</a> -->
         <div class="d2">
             <button type="button" class="btn btn-outline-danger"><a href="<?= $this->Url->build('/user/login') ?>">Login</a></button> <br>
             <button type="button" class="btn btn-outline-danger"><a href="<?= $this->Url->build('/user/regist') ?>">Register</a></button>

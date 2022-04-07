@@ -18,11 +18,6 @@ class T_feedTable extends Table
     }
     public function beforeSave(EventInterface $event, $entity, $options)
     {
-        // if ($entity->isNew() && !$entity->slug) {
-        //     $sluggedTitle = Text::slug($entity->title);
-        //     // trim slug to maximum length defined in schema
-        //     $entity->slug = substr($sluggedTitle, 0, 191);
-        // }
     }
     public function validationDefault(Validator $validator): Validator
     {

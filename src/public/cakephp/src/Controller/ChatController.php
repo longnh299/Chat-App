@@ -2,13 +2,15 @@
 // src/Controller/ChatController.php
 
 namespace App\Controller;
+
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
 use Cake\Datasource\ConnectionManager;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\I18n\FrozenTime;
+
 class ChatController extends AppController
-{   
+{
     public function initialize(): void
     {
         parent::initialize();
@@ -37,35 +39,25 @@ class ChatController extends AppController
             // format time
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             date_default_timezone_get();
-            $time = FrozenTime::now();
-            $_now = $time->i18nFormat('yyyy-MM-dd HH:mm:ss');
-            $t_feed->create_at=$_now;
+            $currentTime = FrozenTime::now();
+            $dateTime = $currentTime->i18nFormat('yyyy-MM-dd HH:mm:ss');
+            $t_feed->create_at = $dateTime;
             $session = $this->getRequest()->getSession();
             $t_feed->user_id = $session->read('user_id');
             $t_feed->name = $session->read('name');
-            // debug($t_feed);
-            // exit;
             // save media file into webroot
-            if(!$t_feed->getErrors){
+            if (!$t_feed->getErrors) {
                 $attachment = $this->request->getData('Media');
-                //if(!$attachment->getErrors()){
                 $name = $attachment->getClientFilename();
-                $type = $attachment->getClientMediaType();
-                $size = $attachment->getSize();
-                $tmpName = $attachment->getStream()->getMetadata('uri');
-                $error = $attachment->getError();
-                if (strpos($name,'.mp4') !== false or strpos($name,'.webm') !== false or strpos($name,'.ogg') !== false) {
-                    $targetPath= WWW_ROOT.'video'.DS.$name;
-                } 
-                elseif (strpos($name,'.mp3') !== false or strpos($name,'.wav') !== false){
-                    $targetPath= WWW_ROOT.'audio'.DS.$name;
-                }
-                else $targetPath= WWW_ROOT.'img'.DS.$name;
-                if($name){
+                if (strpos($name, '.mp4') !== false or strpos($name, '.webm') !== false or strpos($name, '.ogg') !== false) {
+                    $targetPath = WWW_ROOT . 'video' . DS . $name;
+                } elseif (strpos($name, '.mp3') !== false or strpos($name, '.wav') !== false) {
+                    $targetPath = WWW_ROOT . 'audio' . DS . $name;
+                } else $targetPath = WWW_ROOT . 'img' . DS . $name;
+                if ($name) {
                     $attachment->moveTo($targetPath);
-                    $t_feed->imagefilename=$name;
+                    $t_feed->imagefilename = $name;
                 }
-              //}
             }
             // save into database
             if ($this->T_feed->save($t_feed)) {
@@ -87,31 +79,22 @@ class ChatController extends AppController
             $this->T_feed->patchEntity($t_feed, $this->request->getData());
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             date_default_timezone_get();
-            $time = FrozenTime::now();
-            //$now = FrozenTime::parse('now');
-            $_now = $time->i18nFormat('yyyy-MM-dd HH:mm:ss');
-            $t_feed->update_at=$_now;
-            if(!$t_feed->getErrors){
+            $currentTime = FrozenTime::now();
+            $dateTime = $currentTime->i18nFormat('yyyy-MM-dd HH:mm:ss');
+            $t_feed->update_at = $dateTime;
+            if (!$t_feed->getErrors) {
                 $attachment = $this->request->getData('Media');
-                //if(!$attachment->getErrors()){
                 $name = $attachment->getClientFilename();
-                $type = $attachment->getClientMediaType();
-                $size = $attachment->getSize();
-                $tmpName = $attachment->getStream()->getMetadata('uri');
-                $error = $attachment->getError();
-                if (strpos($name,'.mp4') !== false or strpos($name,'.webm') !== false or strpos($name,'.ogg') !== false) {
-                    $targetPath= WWW_ROOT.'video'.DS.$name;
-                } 
-                elseif (strpos($name,'.mp3') !== false or strpos($name,'.wav') !== false){
-                    $targetPath= WWW_ROOT.'audio'.DS.$name;
-                }
-                else $targetPath= WWW_ROOT.'img'.DS.$name;
-                if($name){
+                if (strpos($name, '.mp4') !== false or strpos($name, '.webm') !== false or strpos($name, '.ogg') !== false) {
+                    $targetPath = WWW_ROOT . 'video' . DS . $name;
+                } elseif (strpos($name, '.mp3') !== false or strpos($name, '.wav') !== false) {
+                    $targetPath = WWW_ROOT . 'audio' . DS . $name;
+                } else $targetPath = WWW_ROOT . 'img' . DS . $name;
+                if ($name) {
                     $attachment->moveTo($targetPath);
-                    $t_feed->imagefilename=$name;
+                    $t_feed->imagefilename = $name;
                 }
-             // }
-            }   
+            }
             if ($this->T_feed->save($t_feed)) {
                 $this->Flash->success(__('This Message has been updated.'));
                 return $this->redirect(['action' => 'index']);
@@ -122,9 +105,9 @@ class ChatController extends AppController
         $this->set('t_feed', $t_feed);
     }
     // delete chat
-    public function delete($id){
+    public function delete($id)
+    {
         $this->request->allowMethod(['post', 'delete']);
-
         $t_feed = $this->T_feed->findById($id)->firstOrFail();
         if ($this->T_feed->delete($t_feed)) {
             $this->Flash->success(__('The message of {0} has been deleted.', $t_feed->name));
