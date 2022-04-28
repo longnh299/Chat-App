@@ -72,7 +72,6 @@ class ChatController extends AppController
         $t_feed = $this->T_feed
             ->findById($id)
             ->firstOrFail();
-
         if ($this->request->is(['post', 'put'])) {
             $this->T_feed->patchEntity($t_feed, $this->request->getData());
             date_default_timezone_set('Asia/Ho_Chi_Minh');
@@ -99,7 +98,6 @@ class ChatController extends AppController
             }
             $this->Flash->error(__('Unable to update your message.'));
         }
-
         $this->set('t_feed', $t_feed);
     }
     // delete chat
