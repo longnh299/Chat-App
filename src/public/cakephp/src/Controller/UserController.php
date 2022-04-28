@@ -49,7 +49,6 @@ class UserController extends AppController
                 }
             }
         }
-
         $this->set('t_user', $t_user);
     }
     // register func
@@ -81,33 +80,14 @@ class UserController extends AppController
     }
     // edit account name func
     public function editname()
-    { //$id
-        // $t_user = $this->T_user
-        // ->findById($id)
-        // ->firstOrFail();
+    {
         $t_user = $this->T_user->newEmptyEntity();
         if ($this->request->is('post')) {
             $t_user = $this->T_user->patchEntity($t_user, $this->request->getData());
             if ($this->T_user->save($t_user)) {
                 $this->Flash->success(__('Your account name has been updated.'));
-                //return $this->redirect(['action' => 'index']);
             }
         }
         $this->set('t_user', $t_user);
     }
-    // public function editname($id)
-    // {
-    //     $t_user = $this->T_user->findById($id)->firstOrFail();
-    //     if ($this->request->is(['post', 'put'])) {
-    //         $this->T_user->patchEntity($t_user, $this->request->getData());
-    //         if ($this->T_user->save($t_user)) {
-    //             $this->Flash->success(__('Your account name has been updated.'));
-    //             //return $this->redirect(['action' => 'index']);
-    //         }
-    //         $this->Flash->error(__('Unable to update your message.'));
-    //     }
-
-    //     $this->set('t_user', $t_user);
-    // }
-
 }
