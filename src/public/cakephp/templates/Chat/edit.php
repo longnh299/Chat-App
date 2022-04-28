@@ -1,4 +1,4 @@
-<!-- File: templates/Chat/edit.php -->
+
 <style>
 .edit-div {
     width: 80%;
@@ -12,12 +12,6 @@
      display: flex; 
     overflow-x: scroll;
 }
-/* .emojidiv {
-    min-width: 16.6%;
-    min-height: 90px;
-    background-color: #f5f7fa;
-    border: none; 
-} */
 .emoji_btn{
     min-width: 16.6%;
     min-height: 90px;
@@ -25,7 +19,6 @@
     border: none; 
 }
 h1 {
-    /* padding-left: 450px; */
     color:#606c76;
     font-size: 2.0rem;
     font-weight: 700;
@@ -75,7 +68,6 @@ h1 {
     $t_feed->name = $session->read('name');
     echo $this->Form->create($t_feed,array('type'=>'file'));
     echo $this->Form->control('id', ['type' => 'hidden']);
-    // echo $this->Form->control('name',['value'=>$session->read('name'),'disabled'=>'disabled']);
     echo $this->Form->control('message', ['rows' => '3']);
     echo "<h1>Current Media</h1>";
     $media = $t_feed->imagefilename;
@@ -135,15 +127,12 @@ h1 {
         $sub_rev_str = substr($rev_str,4);
         $rev_sub_rev_str = strrev($sub_rev_str);
         $id_stamp = (int)$rev_sub_rev_str;
-        //echo $id_stamp;
         echo '<button class="emoji_btn" name="stamp_id" value='.$id_stamp.'><img src="/'.$emoji.'" /></button>';
     }
     echo "</div>";
     echo "<br>";
-    //echo "<div class="">";
     echo $this->Form->button(__('Save Chat'),['class'=>'btn-send']);
     echo $this->Html->link('Back', ['class'=>'btn-back','action' => 'index']) ;
-    //echo "</div>";
     echo $this->Form->end();
 ?>
 </div>
@@ -168,7 +157,6 @@ h1 {
                     $('#preview-video').attr('src', e.target.result).attr("hidden",true);
                     $('#preview-audio').attr('src', e.target.result).attr("hidden",true);
                 }
-            // console.log(e.target.result);
             };
             reader.readAsDataURL(input.files[0]);
         }

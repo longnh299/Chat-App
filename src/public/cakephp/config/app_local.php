@@ -36,7 +36,7 @@ return [
      */
     'Datasources' => [
         'default' => [
-            'driver' => 'mysql',
+            //'driver' => 'mysql',
             'persistent' => false,
             'host' => 'mysql',
             /*

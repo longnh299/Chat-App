@@ -1,6 +1,4 @@
 <?php
-// src/Controller/ChatController.php
-
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -114,18 +112,4 @@ class ChatController extends AppController
             return $this->redirect(['action' => 'index']);
         }
     }
-    // public function editname($id)
-    // {
-    //     $t_user = $this->T_user->findById($id)->firstOrFail();
-    //     if ($this->request->is(['post', 'put'])) {
-    //         $this->T_user->patchEntity($t_user, $this->request->getData());
-    //         if ($this->T_user->save($t_user)) {
-    //             $this->Flash->success(__('Your account name has been updated.'));
-    //             //return $this->redirect(['action' => 'index']);
-    //         }
-    //         $this->Flash->error(__('Unable to update your message.'));
-    //     }
-
-    //     $this->set('t_user', $t_user);
-    // }
 }

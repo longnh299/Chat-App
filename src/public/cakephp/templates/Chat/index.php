@@ -1,4 +1,4 @@
-<!-- File: templates/Chat/index.php  (delete links added) -->
+
 
 <head>
     <style>
@@ -173,24 +173,15 @@ $t_feed->name = $session->read('name');
                     <?php
                     // html can support video format types : mp4,webm,ogg
                     $media = $t_feed->imagefilename;
-                    if (strpos($media, '.mp4') !== false) {
+                    if (strpos($media, '.mp4') !== false || strpos($media, '.webm') !== false || strpos($media, '.ogg') !== false) {
                         echo '<video width="320" height="240" controls>';
                         echo "<source src='/video/$media' type='video/mp4'>";
-                        echo "</video>";
-                    } elseif (strpos($media, '.webm') !== false) {
-                        echo '<video width="320" height="240" controls>';
                         echo "<source src='/video/$media' type='video/webm'>";
-                        echo "</video>";
-                    } elseif (strpos($media, '.ogg') !== false) {
-                        echo '<video width="320" height="240" controls>';
                         echo "<source src='/video/$media' type='video/ogg'>";
                         echo "</video>";
-                    } elseif (strpos($media, '.mp3') !== false) {
+                    } elseif (strpos($media, '.mp3') !== false || strpos($media, '.wav') !== false) {
                         echo '<audio width="320" height="240" controls>';
                         echo "<source src='/audio/$media' type='audio/mpeg'>";
-                        echo "</audio>";
-                    } elseif (strpos($media, '.wav') !== false) {
-                        echo '<audio width="320" height="240" controls>';
                         echo "<source src='/audio/$media' type='audio/wav'>";
                         echo "</audio>";
                     } else {
